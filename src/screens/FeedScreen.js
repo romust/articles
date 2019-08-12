@@ -18,25 +18,34 @@ class FeedScreen extends React.Component {
         message: '',
     };
 
+    componentDidMount = async () => {
+        this.props.store.setSource('https://gist.githubusercontent.com/happy-thorny/bd038afd981be300ac2ed6e5a8ad9f3c/raw/dd90f04475a2a7c1110151aacc498eabe683dfe4/memes.json');
+        await this.props.store.getFeed();
+        console.log('articles' + JSON.stringify(this.props.store.articles));
+    }
+
     _renderItem = ({ item }) => (
-        <FeedItem title={item.title} />
+        <FeedItem title={item.title} shortDescription={item.shortDescription} imageUrl={item.imageUrl} />
     )
+    _setUpButtonClick = () => {
+        console.log('click');
+    }
 
-
-render() {
-    const { store } = this.props;
-    return (
-        <FlatList
-            ListHeaderComponent={
-                <TouchableOpacity style={styles.setUpButton} onPress={()=>{console.log('click');
-                }}><Text style={styles.buttonText}>Setup the source</Text></TouchableOpacity>}
-            data={[{ title: 'test1', id: '1' }, { title: 'Test2', id: '2' }]}
-            renderItem={this._renderItem}
-            ListEmptyComponent={<Text style={styles.mainFontUserType}>There is not available articles</Text>}
-            keyExtractor={(item) => item.id}
-        />
-    );
-}
+    render() {
+        const { store } = this.props;
+        return (
+            <FlatList
+                ListHeaderComponent={
+                    <TouchableOpacity style={styles.setUpButton} onPress={this._setUpButtonClick}>
+                        <Text style={styles.buttonText}>Setup the source</Text></TouchableOpacity>}
+                data={store.articles}
+                renderItem={this._renderItem}
+                ListEmptyComponent={<Text>There is not available articles</Text>}
+                keyExtractor={(item) => item.id}
+                style={styles.container}
+            />
+        );
+    }
 }
 
 export default FeedScreen;

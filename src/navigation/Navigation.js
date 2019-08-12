@@ -14,7 +14,12 @@ export default createAppContainer(
         },
         {
             //initialRouteName: 'Aticles',
-            resetOnBlur: false
+            resetOnBlur: false,
+            defaultNavigationOptions: {
+                headerStyle: {
+                    backgroundColor: '#FFC234'
+                }
+            }
         }
     )
 );
