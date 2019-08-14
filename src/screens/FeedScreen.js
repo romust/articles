@@ -19,7 +19,7 @@ class FeedScreen extends React.Component {
     };
 
     componentDidMount = async () => {
-        this.props.store.setSource('https://gist.githubusercontent.com/happy-thorny/bd038afd981be300ac2ed6e5a8ad9f3c/raw/dd90f04475a2a7c1110151aacc498eabe683dfe4/memes.json');
+        //this.props.store.setSource('https://gist.githubusercontent.com/happy-thorny/bd038afd981be300ac2ed6e5a8ad9f3c/raw/dd90f04475a2a7c1110151aacc498eabe683dfe4/memes.json');
         await this.props.store.getFeed();
         console.log('articles' + JSON.stringify(this.props.store.articles));
     }
@@ -28,7 +28,7 @@ class FeedScreen extends React.Component {
         <FeedItem title={item.title} shortDescription={item.shortDescription} imageUrl={item.imageUrl} />
     )
     _setUpButtonClick = () => {
-        console.log('click');
+        this.props.navigation.navigate('SetupSource');
     }
 
     render() {
@@ -37,7 +37,7 @@ class FeedScreen extends React.Component {
             <FlatList
                 ListHeaderComponent={
                     <TouchableOpacity style={styles.setUpButton} onPress={this._setUpButtonClick}>
-                        <Text style={styles.buttonText}>Setup the source</Text></TouchableOpacity>}
+                        <Text style={styles.buttonText}>SETUP THE SOURCE</Text></TouchableOpacity>}
                 data={store.articles}
                 renderItem={this._renderItem}
                 ListEmptyComponent={<Text>There is not available articles</Text>}

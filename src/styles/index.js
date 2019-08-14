@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
     },
     image: {
         backgroundColor: 'black',//edeef0
+    },
+    input: {
+        backgroundColor: 'white',
+        marginHorizontal: 16,
+        marginVertical: 8
     }
 });
 export default styles;
