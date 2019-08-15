@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Text, TouchableOpacity, View, Image, Dimensions } from 'react-native';
+import { Text, TouchableOpacity, View, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import WebView from 'react-native-webview';
 import styles from '../styles';
 
@@ -20,7 +20,7 @@ class FeedItem extends React.Component {
         });
     }
     render() {
-        const { title, shortDescription, imageUrl } = this.props;
+        const { title, shortDescription, imageUrl, onPressButton } = this.props;
         // const html = `
         //     <!DOCTYPE html>
         //     <html>
@@ -46,26 +46,29 @@ class FeedItem extends React.Component {
         //const { width: windowWidth } = Dimensions.get('window')
 
         return (
-            <View style={{
-                backgroundColor: 'white',
-                marginBottom: 10
-            }}>
-                <Text style={styles.articleTitle}>{title}</Text>
-                <Text style={styles.articleDescription}>{shortDescription}</Text>
-                <Image
-                    style={{
-                        ...styles.image, 
-                        width: this.state.width,
-                        height: this.state.height
-                    }}
-                    source={{ uri: imageUrl }} />
+            <TouchableWithoutFeedback onPress={onPressButton}>
+                <View style={{
+                    backgroundColor: 'white',
+                    marginBottom: 10
+                }}
+                    onPress={onPressButton}>
+                    <Text style={styles.articleTitle}>{title}</Text>
+                    <Text style={styles.articleDescription}>{shortDescription}</Text>
+                    <Image
+                        style={{
+                            ...styles.image,
+                            width: this.state.width,
+                            height: this.state.height
+                        }}
+                        source={{ uri: imageUrl }} />
 
-                {/* <WebView source={{
+                    {/* <WebView source={{
                     html: html,
                 }}
                     originWhitelist={['*']}
                     style={{ height: 40 }} />*/}
-            </View>
+                </View>
+            </TouchableWithoutFeedback>
         );
     }
 }

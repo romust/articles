@@ -17,15 +17,11 @@ class SetupSourceScreen extends React.Component {
     state = {
         source: null
     };
-
-    componentDidMount = async () => {
-        //this.props.store.setSource('https://gist.githubusercontent.com/happy-thorny/bd038afd981be300ac2ed6e5a8ad9f3c/raw/dd90f04475a2a7c1110151aacc498eabe683dfe4/memes.json');
-        //await this.props.store.getFeed();
-        //console.log('articles' + JSON.stringify(this.props.store.articles));
+    componentDidMount = () => {
+        this.setState({ source: this.props.store.source });
     }
-
     _setUpButtonClick = async () => {
-        this.props.store.setSource(this.state.source);
+        //this.props.store.setSource(this.state.source);
         await this.props.store.getFeed();
         this.props.navigation.navigate('Feed');
     }
@@ -38,7 +34,7 @@ class SetupSourceScreen extends React.Component {
                     mode='outlined'
                     style={styles.input}
                     label='Source'
-                    onChangeText={source => this.setState({ source })}
+                    onChangeText={source => this.props.store.setSource(source)}
                     value={this.props.store.source}
                     theme={{
                         colors: {

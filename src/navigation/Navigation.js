@@ -1,6 +1,6 @@
 import FeedScreen from '../screens/FeedScreen';
-import SetupSourceScreen from '../screens/SetupSourceScreen'
-//import ArticleDetailsScreen from '../screens/ArticleDetailsScreen';
+import SetupSourceScreen from '../screens/SetupSourceScreen';
+import ArticleDetailsScreen from '../screens/ArticleDetailsScreen';
 import {
     createAppContainer,
     createStackNavigator
@@ -11,7 +11,8 @@ export default createAppContainer(
         //свитч проверки авторизации
         {
             Feed: FeedScreen,
-            SetupSource: SetupSourceScreen
+            SetupSource: SetupSourceScreen,
+            ArticleDetails: ArticleDetailsScreen
             //rticleDetails: ArticleDetailsScreen
         },
         {
