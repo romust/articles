@@ -13,10 +13,8 @@ export default createAppContainer(
             Feed: FeedScreen,
             SetupSource: SetupSourceScreen,
             ArticleDetails: ArticleDetailsScreen
-            //rticleDetails: ArticleDetailsScreen
         },
         {
-            //initialRouteName: 'Aticles',
             resetOnBlur: false,
             defaultNavigationOptions: {
                 headerStyle: {

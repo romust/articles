@@ -1,12 +1,9 @@
-import React, { Fragment } from 'react';
-import { Text, TouchableOpacity, View, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
-import WebView from 'react-native-webview';
+import React from 'react';
+import { Text, View, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import styles from '../styles';
+
 const TAG = '~FeedItem.js~'
 class FeedItem extends React.Component {
-    // _onPressButton = () => {
-    //     this.props.onPressButton(this.props.order);
-    // };
     state = {
         width: null,
         height: null
@@ -20,35 +17,12 @@ class FeedItem extends React.Component {
         });
     }
 
-    _onPressButton = () => {       
+    _onPressButton = () => {
         this.props.onPressButton(this.props.item);
     };
 
     render() {
-        const { title, shortDescription, imageUrl} = this.props.item;
-        // const html = `
-        //     <!DOCTYPE html>
-        //     <html>
-        //     <head>
-        //         <style type="text/css">
-        //             body {
-        //                 font-family: Lohit-Gujarati;
-        //                 font-size: 32pt;
-        //                 color: black;
-        //                 padding: 0px 10px 10px 10px;
-        //             }
-
-        //             p {
-        //                 text-align: justify;
-        //             }
-        //         </style>
-        //     </head>
-        //     <body>
-        //         ${shortDescription}
-        //     </body>
-        //     </html>
-        // `;
-        //const { width: windowWidth } = Dimensions.get('window')
+        const { title, shortDescription, imageUrl } = this.props.item;
 
         return (
             <TouchableWithoutFeedback onPress={this._onPressButton}>
@@ -65,12 +39,6 @@ class FeedItem extends React.Component {
                             height: this.state.height
                         }}
                         source={{ uri: imageUrl }} />
-
-                    {/* <WebView source={{
-                    html: html,
-                }}
-                    originWhitelist={['*']}
-                    style={{ height: 40 }} />*/}
                 </View>
             </TouchableWithoutFeedback>
         );

@@ -24,8 +24,8 @@ export default function LoadingButton({ style, children, onPress }) {
             {loading ? (
                 <ActivityIndicator style={{ flex: 1 }} color='grey' />
             ) : (
-                <Text style={styles.buttonText}>{children}</Text>
-            )}
+                    <Text style={styles.buttonText}>{children}</Text>
+                )}
         </TouchableOpacity>
     );
 }

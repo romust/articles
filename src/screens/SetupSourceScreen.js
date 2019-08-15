@@ -1,9 +1,7 @@
 import { inject, observer } from 'mobx-react/native';
 import React from 'react';
-import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import styles from '../styles';
-import FeedItem from '../components/FeedItem';
 import { ScrollView } from 'react-native-gesture-handler';
 import LoadingButton from '../components/LoadingButton';
 
@@ -28,7 +26,6 @@ class SetupSourceScreen extends React.Component {
     }
 
     render() {
-        const { store } = this.props;
         return (
             <ScrollView>
                 <TextInput
@@ -44,8 +41,8 @@ class SetupSourceScreen extends React.Component {
                         }
                     }}
                 />
-                <LoadingButton style={styles.setUpButton} onPress={this._setUpButtonClick}>
-                    SUBMIT                    
+                <LoadingButton style={styles.button} onPress={this._setUpButtonClick}>
+                    SUBMIT
                 </LoadingButton>
             </ScrollView>
 
