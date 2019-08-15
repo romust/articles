@@ -25,15 +25,13 @@ class FeedScreen extends React.Component {
     }
 
     _renderItem = ({ item }) => (
-        <FeedItem title={item.title} shortDescription={item.shortDescription} imageUrl={item.imageUrl} onPressButton={this.onItemPress} />
+        <FeedItem item={item} onPressButton={this.onItemPress} />
     )
     _setUpButtonClick = () => {
         this.props.navigation.navigate('SetupSource');
     }
-    onItemPress = () => {
-        this.props.navigation.navigate('ArticleDetails');
-        console.log('clllllll');
-        
+    onItemPress = (article) => {
+        this.props.navigation.navigate('ArticleDetails', { article });
     }
 
     render() {

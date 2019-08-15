@@ -17,7 +17,7 @@ class ObservableStore {
     @action async getFeed() {
         if (this.source) {
             const response = await NetworkRequests.getFeed(this.source);
-            let i = 0;
+            let i = -1;
             const articles = response.data.feed.article.map(item => {
                 i++;
                 item.title = item.title.replace(/<\/?[^>]+>/g, '');

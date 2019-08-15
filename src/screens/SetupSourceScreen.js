@@ -5,6 +5,7 @@ import { TextInput } from 'react-native-paper';
 import styles from '../styles';
 import FeedItem from '../components/FeedItem';
 import { ScrollView } from 'react-native-gesture-handler';
+import LoadingButton from '../components/LoadingButton';
 
 const TAG = '~SetupSourceScreen~';
 
@@ -43,11 +44,9 @@ class SetupSourceScreen extends React.Component {
                         }
                     }}
                 />
-                <TouchableOpacity style={styles.setUpButton} onPress={this._setUpButtonClick}>
-                    <Text style={styles.buttonText}>
-                        SUBMIT
-                    </Text>
-                </TouchableOpacity>
+                <LoadingButton style={styles.setUpButton} onPress={this._setUpButtonClick}>
+                    SUBMIT                    
+                </LoadingButton>
             </ScrollView>
 
         );

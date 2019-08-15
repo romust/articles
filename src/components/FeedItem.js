@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Text, TouchableOpacity, View, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import WebView from 'react-native-webview';
 import styles from '../styles';
-
+const TAG = '~FeedItem.js~'
 class FeedItem extends React.Component {
     // _onPressButton = () => {
     //     this.props.onPressButton(this.props.order);
@@ -12,15 +12,20 @@ class FeedItem extends React.Component {
         height: null
     };
     componentDidMount = () => {
-        Image.getSize(this.props.imageUrl, (width, height) => {
+        Image.getSize(this.props.item.imageUrl, (width, height) => {
             const ratio = height / width;
             const scaleWidth = Dimensions.get('window').width;
             const scaleHeight = scaleWidth * ratio;
             this.setState({ width: scaleWidth, height: scaleHeight });
         });
     }
+
+    _onPressButton = () => {       
+        this.props.onPressButton(this.props.item);
+    };
+
     render() {
-        const { title, shortDescription, imageUrl, onPressButton } = this.props;
+        const { title, shortDescription, imageUrl} = this.props.item;
         // const html = `
         //     <!DOCTYPE html>
         //     <html>
@@ -46,12 +51,11 @@ class FeedItem extends React.Component {
         //const { width: windowWidth } = Dimensions.get('window')
 
         return (
-            <TouchableWithoutFeedback onPress={onPressButton}>
+            <TouchableWithoutFeedback onPress={this._onPressButton}>
                 <View style={{
                     backgroundColor: 'white',
                     marginBottom: 10
-                }}
-                    onPress={onPressButton}>
+                }}>
                     <Text style={styles.articleTitle}>{title}</Text>
                     <Text style={styles.articleDescription}>{shortDescription}</Text>
                     <Image
