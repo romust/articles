@@ -6,7 +6,7 @@ const TAG = '~NetworkRequest.js~';
 async function getFeed(source) {
     let response;
     try {
-        response = await axios.get(source);
+        response = await axios.get(source + '?' + Number(new Date()));
         console.log(TAG, 'getFeed response.data: ', response.data);
     } catch (error) {
         networkErrorHandler(TAG, error, `get ${source}`);

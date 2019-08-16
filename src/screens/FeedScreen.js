@@ -4,7 +4,7 @@ import { Text, FlatList, TouchableOpacity } from 'react-native';
 import styles from '../styles';
 import FeedItem from '../components/FeedItem';
 
-const TAG = '~MainScreen~';
+const TAG = '~FeedScreen~';
 
 @inject('store')
 @observer
@@ -16,10 +16,23 @@ class FeedScreen extends React.Component {
         refreshing: false,
     };
 
+    timeoutsSet = new Set();
+
     componentDidMount = async () => {
         this.props.store.setSource('https://gist.githubusercontent.com/happy-thorny/bd038afd981be300ac2ed6e5a8ad9f3c/raw/dd90f04475a2a7c1110151aacc498eabe683dfe4/memes.json');
-        this._onRefresh();
+        
+        this.willFocusSubscription = this.props.navigation.addListener('willFocus', () => {
+            this._onRefresh();
+        });
+        this.componentIsMount = true;
     }
+    componentWillUnmount() {
+		for (let timeout of this.timeoutsSet) {
+			clearTimeout(timeout);
+		}
+		this.timeoutsSet.clear();
+		this.componentIsMount = false;
+	}
 
     _renderItem = ({ item }) => (
         <FeedItem item={item} onPressButton={this.onItemPress} />
@@ -32,6 +45,7 @@ class FeedScreen extends React.Component {
     }
 
     _onRefresh = async () => {
+        this.setState({refreshing: true});
         try {
             await this.props.store.getFeed();
         } catch (error) {
@@ -64,6 +78,7 @@ class FeedScreen extends React.Component {
                 keyExtractor={(item) => item.id}
                 refreshing={this.state.refreshing}
                 onRefresh={this._onRefresh}
+                extraData={this.props}
                 style={styles.container}
             />
         );

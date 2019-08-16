@@ -6,15 +6,28 @@ const TAG = '~FeedItem.js~'
 class FeedItem extends React.Component {
     state = {
         width: null,
-        height: null
+        height: null,
+        imageUrl: null,
     };
+
     componentDidMount = () => {
-        Image.getSize(this.props.item.imageUrl, (width, height) => {
-            const ratio = height / width;
-            const scaleWidth = Dimensions.get('window').width;
-            const scaleHeight = scaleWidth * ratio;
-            this.setState({ width: scaleWidth, height: scaleHeight });
-        });
+        
+    }
+    shouldComponentUpdate = () => {
+        if(this.props.item.imageUrl!= this.state.imageUrl){
+            this.setState({imageUrl: this.props.item.imageUrl})
+            Image.getSize(this.props.item.imageUrl, (width, height) => {
+                console.log(TAG, width + ' ' + height + ' ' + this.props.item.title);
+                const ratio = height / width;
+                const scaleWidth = Dimensions.get('window').width;
+                this.setState({
+                    width: scaleWidth,
+                    height: scaleWidth * ratio
+                });         
+                  
+            });
+        }
+        return true; 
     }
 
     _onPressButton = () => {
@@ -22,7 +35,7 @@ class FeedItem extends React.Component {
     };
 
     render() {
-        const { title, shortDescription, imageUrl } = this.props.item;
+        const { title, shortDescription, imageUrl, imageWidth, imageHeight } = this.props.item;
 
         return (
             <TouchableWithoutFeedback onPress={this._onPressButton}>
@@ -32,13 +45,15 @@ class FeedItem extends React.Component {
                 }}>
                     <Text style={styles.articleTitle}>{title}</Text>
                     <Text style={styles.articleDescription}>{shortDescription}</Text>
+                    {/* {this._loadImage()} */}
                     <Image
-                        style={{
-                            ...styles.image,
-                            width: this.state.width,
-                            height: this.state.height
-                        }}
-                        source={{ uri: imageUrl }} />
+                    style={{
+                        ...styles.image,
+                        width: this.state.width,
+                        height: this.state.height
+                    }}
+                    source={{ uri: this.props.item.imageUrl }} />
+
                 </View>
             </TouchableWithoutFeedback>
         );
