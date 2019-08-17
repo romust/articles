@@ -18,4 +18,6 @@ async function validateArticles(articles) {
     }
 }
 
-export default validateArticles;
+export default {
+    validateArticles
+};

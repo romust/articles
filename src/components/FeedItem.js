@@ -10,9 +10,6 @@ class FeedItem extends React.Component {
         imageUrl: null,
     };
 
-    componentDidMount = () => {
-        
-    }
     shouldComponentUpdate = () => {
         if(this.props.item.imageUrl!= this.state.imageUrl){
             this.setState({imageUrl: this.props.item.imageUrl})
@@ -23,8 +20,7 @@ class FeedItem extends React.Component {
                 this.setState({
                     width: scaleWidth,
                     height: scaleWidth * ratio
-                });         
-                  
+                });             
             });
         }
         return true; 
