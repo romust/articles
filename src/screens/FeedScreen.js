@@ -1,9 +1,10 @@
 import { inject, observer } from 'mobx-react/native';
 import React from 'react';
-import { Text, FlatList, TouchableOpacity, Alert } from 'react-native';
+import { Text, FlatList, TouchableOpacity } from 'react-native';
 import styles from '../styles';
 import FeedItem from '../components/FeedItem';
 import NetInfo from "@react-native-community/netinfo";
+import Alert from '../utils/Alert';
 
 const TAG = '~FeedScreen~';
 
@@ -17,23 +18,19 @@ class FeedScreen extends React.Component {
         refreshing: false,
     };
 
-    timeoutsSet = new Set();
-
-    componentDidMount = async () => {
+    componentDidMount = () => {
         this.props.store.setSource('https://gist.githubusercontent.com/happy-thorny/bd038afd981be300ac2ed6e5a8ad9f3c/raw/dd90f04475a2a7c1110151aacc498eabe683dfe4/memes.json');
-        
         this.willFocusSubscription = this.props.navigation.addListener('willFocus', () => {
             this._onRefresh();
         });
         this.componentIsMount = true;
     }
     componentWillUnmount() {
-		for (let timeout of this.timeoutsSet) {
-			clearTimeout(timeout);
-		}
-		this.timeoutsSet.clear();
-		this.componentIsMount = false;
-	}
+        if (this.willFocusSubscription) {
+            this.willFocusSubscription.remove();
+        }
+        this.componentIsMount = false;
+    }
 
     _renderItem = ({ item }) => (
         <FeedItem item={item} onPressButton={this.onItemPress} />
@@ -46,36 +43,19 @@ class FeedScreen extends React.Component {
     }
 
     _onRefresh = async () => {
-        this.setState({refreshing: true});
-        NetInfo.fetch().then(async state => {
-            if(state.isConnected){
+        this.setState({ refreshing: true });
+        await NetInfo.fetch().then(async state => {
+            if (state.isConnected) {
                 try {
                     await this.props.store.getFeed();
                 } catch (error) {
-                    Alert.alert(
-                        'Internet Error',
-                        error,
-                        [     
-                            {
-                                text: 'OK',
-                            }
-                        ],
-                        { cancelable: true }
-                    );
+                    Alert.showSimpleAlert('Internet Error', error);
                 }
             } else {
-                Alert.alert(
-                    'Internet Error',
-                    'Check your internet connection',
-                    [     
-                        {
-                            text: 'OK',
-                        }
-                    ],
-                    { cancelable: true }
-                );
+                Alert.showSimpleAlert('Internet Error', 'Check your internet connection');
             }
-          });
+        });
+
         if (this.componentIsMount) {
             this.setState({ refreshing: false });
         }
@@ -101,7 +81,6 @@ class FeedScreen extends React.Component {
                 keyExtractor={(item) => item.id}
                 refreshing={this.state.refreshing}
                 onRefresh={this._onRefresh}
-                extraData={this.props}
                 style={styles.container}
             />
         );
