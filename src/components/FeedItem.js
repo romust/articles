@@ -20,6 +20,11 @@ class FeedItem extends React.Component {
                     width: scaleWidth,
                     height: scaleWidth * ratio
                 });
+            }, (error)=>{
+                this.setState({
+                    width: 0,
+                    height: 0
+                })
             });
             return false;
         } else {

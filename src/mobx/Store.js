@@ -5,7 +5,6 @@ import Validator from './Validator';
 const TAG = '~Store.js~';
 
 class ObservableStore {
-    // @observable.shallow orders = [];
     @observable source = null;
     @observable articles = null;
 

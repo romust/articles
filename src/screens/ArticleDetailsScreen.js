@@ -22,6 +22,11 @@ class ArticleDetailsScreen extends React.Component {
             const scaleWidth = Dimensions.get('window').width;
             const scaleHeight = scaleWidth * ratio;
             this.setState({ width: scaleWidth, height: scaleHeight });
+        }, (error)=>{
+            this.setState({
+                width: 0,
+                height: 0
+            })
         });
     }
 
@@ -32,7 +37,7 @@ class ArticleDetailsScreen extends React.Component {
     }
 
     render() {
-        const { title, date, imageUrl, description, id, link } = this.props.navigation.getParam('article')
+        const { title, date, imageUrl, description, link } = this.props.navigation.getParam('article')
         return (
             <ScrollView>
                 <View style={{
