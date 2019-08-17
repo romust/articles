@@ -19,12 +19,15 @@ class ObservableStore {
         if (this.source) {
             try {
                 const response = await NetworkRequests.getFeed(this.source);
-                const validateArticles = await Validator.validateArticles(response.data.feed.article);
-                
-                validateArticles.sort(this.compare);
-                runInAction(() => {
-                    this.articles = validateArticles;
-                });
+                if (response.data.feed) {                    
+                    const validateArticles = await Validator.validateArticles(response.data.feed.article);                    
+                    validateArticles.sort(this.compare);
+                    runInAction(() => {
+                        this.articles = validateArticles;
+                    });
+                } else {
+                    throw 'This link does not have any articles'
+                }
             } catch (err) {
                 throw err
             }

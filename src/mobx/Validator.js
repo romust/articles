@@ -1,19 +1,21 @@
 const TAG = '~Validator.js~';
 
 async function validateArticles(articles) {
-    let i = -1;
-    console.log(TAG, articles[0].title);
-    const response = articles.map(item => {
+    if (articles) {
+        let i = 0;
 
-        item.title = item.title.replace(/<\/?[^>]+>/g, '');
-        item.shortDescription = item.shortDescription.replace(/<\/?[^>]+>/g, '');
-        item.description = item.description.replace(/<\/?[^>]+>/g, '');
-
-        return { ...item, id: '' + i++ }//, imageWidth: scaleWidth, imageHeight: scaleHeight
-    });
-    return response;
+        const response = articles
+            .filter(item => {
+                return item.title && item.shortDescription && item.description && item.date
+            })
+            .map(item => {
+                item.title = item.title.replace(/<\/?[^>]+>/g, '');
+                item.shortDescription = item.shortDescription.replace(/<\/?[^>]+>/g, '');
+                item.description = item.description.replace(/<\/?[^>]+>/g, '');
+                return { ...item, id: '' + i++ }
+            });
+        return response;
+    }
 }
 
-export default {
-    validateArticles
-};
+export default validateArticles;
