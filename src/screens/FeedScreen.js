@@ -1,8 +1,9 @@
 import { inject, observer } from 'mobx-react/native';
 import React from 'react';
-import { Text, FlatList, TouchableOpacity } from 'react-native';
+import { Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import styles from '../styles';
 import FeedItem from '../components/FeedItem';
+import NetInfo from "@react-native-community/netinfo";
 
 const TAG = '~FeedScreen~';
 
@@ -46,13 +47,35 @@ class FeedScreen extends React.Component {
 
     _onRefresh = async () => {
         this.setState({refreshing: true});
-        try {
-            await this.props.store.getFeed();
-        } catch (error) {
-            console.log(TAG, error);
-
-        }
-
+        NetInfo.fetch().then(async state => {
+            if(state.isConnected){
+                try {
+                    await this.props.store.getFeed();
+                } catch (error) {
+                    Alert.alert(
+                        'Internet Error',
+                        error,
+                        [     
+                            {
+                                text: 'OK',
+                            }
+                        ],
+                        { cancelable: true }
+                    );
+                }
+            } else {
+                Alert.alert(
+                    'Internet Error',
+                    'Check your internet connection',
+                    [     
+                        {
+                            text: 'OK',
+                        }
+                    ],
+                    { cancelable: true }
+                );
+            }
+          });
         if (this.componentIsMount) {
             this.setState({ refreshing: false });
         }

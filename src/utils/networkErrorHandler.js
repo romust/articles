@@ -5,7 +5,7 @@ export default function networkErrorHandler(TAG, error, route) {
             throw `Error ${error.response.status},  ${error.response.data.message}`;
         }
         if (error.message.includes('Network Error')) {
-            throw 'Network Error. Check your internet connection. Make sure you entered the url correctly';
+            throw 'Network Error. Make sure you entered the url correctly. Check your internet connection.';
         }
     } else {
         throw `Internal error, ${error}`;

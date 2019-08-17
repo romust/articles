@@ -4,7 +4,7 @@ import { TextInput } from 'react-native-paper';
 import styles from '../styles';
 import { ScrollView } from 'react-native-gesture-handler';
 import LoadingButton from '../components/LoadingButton';
-import { Alert } from "react-native"
+import { Alert } from "react-native";
 
 const TAG = '~SetupSourceScreen~';
 
@@ -21,8 +21,9 @@ class SetupSourceScreen extends React.Component {
         this.setState({ source: this.props.store.source });
     }
     _setUpButtonClick = async () => {
-        //this.props.store.setSource(this.state.source);
+        //
         try{
+            this.props.store.setSource(this.state.source);
             await this.props.store.getFeed();
             this.props.navigation.navigate('Feed');
         } catch(err) {
@@ -47,8 +48,8 @@ class SetupSourceScreen extends React.Component {
                     mode='outlined'
                     style={styles.input}
                     label='Source'
-                    onChangeText={source => this.props.store.setSource(source)}
-                    value={this.props.store.source}
+                    onChangeText={source => this.setState({source})}
+                    value={this.state.source}
                     theme={{
                         colors: {
                             placeholder: 'grey', text: 'black', primary: 'grey',
