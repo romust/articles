@@ -47,7 +47,6 @@ class FeedItem extends React.Component {
                 }}>
                     <Text style={styles.articleTitle}>{title}</Text>
                     <Text style={styles.articleDescription}>{shortDescription}</Text>
-                    {/* {this._loadImage()} */}
                     <Image
                         style={{
                             ...styles.image,

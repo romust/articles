@@ -5,14 +5,14 @@ import styles from '../styles';
 import FeedItem from '../components/FeedItem';
 import NetInfo from "@react-native-community/netinfo";
 import Alert from '../utils/Alert';
-
+import I18n from '../strings/I18n';
 const TAG = '~FeedScreen~';
 
 @inject('store')
 @observer
 class FeedScreen extends React.Component {
     static navigationOptions = {
-        title: 'Feed'
+        title: I18n.t('feed')
     };
     state = {
         refreshing: false,
@@ -49,10 +49,10 @@ class FeedScreen extends React.Component {
                 try {
                     await this.props.store.getFeed();
                 } catch (error) {
-                    Alert.showSimpleAlert('Internet Error', error);
+                    Alert.showSimpleAlert(I18n.t('error'), error);
                 }
             } else {
-                Alert.showSimpleAlert('Internet Error', 'Check your internet connection');
+                Alert.showSimpleAlert(I18n.t('error'), I18n.t('checkInternet'));
             }
         });
 
@@ -68,14 +68,14 @@ class FeedScreen extends React.Component {
                 ListHeaderComponent={
                     <TouchableOpacity style={styles.setUpButton} onPress={this._setUpButtonClick}>
                         <Text style={styles.buttonText}>
-                            SETUP THE SOURCE
+                            {I18n.t('setUpButton')}
                         </Text>
                     </TouchableOpacity>}
                 data={store.articles}
                 renderItem={this._renderItem}
                 ListEmptyComponent={
                     <Text style={styles.message}>
-                        The source is not defined
+                        {I18n.t('undefinedSource')}
                     </Text>
                 }
                 keyExtractor={(item) => item.id}

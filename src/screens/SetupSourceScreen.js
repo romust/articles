@@ -5,6 +5,7 @@ import styles from '../styles';
 import { ScrollView } from 'react-native-gesture-handler';
 import LoadingButton from '../components/LoadingButton';
 import Alert from '../utils/Alert';
+import I18n from '../strings/I18n';
 
 const TAG = '~SetupSourceScreen~';
 
@@ -12,7 +13,7 @@ const TAG = '~SetupSourceScreen~';
 @observer
 class SetupSourceScreen extends React.Component {
     static navigationOptions = {
-        title: 'Setup the source'
+        title: I18n.t('setUpTitle')
     };
     state = {
         source: null
@@ -21,12 +22,8 @@ class SetupSourceScreen extends React.Component {
         this.setState({ source: this.props.store.source });
     }
     _setUpButtonClick = async () => {
-        try{
-            this.props.store.setSource(this.state.source);
-            this.props.navigation.navigate('Feed');
-        } catch(err) {
-                Alert.showSimpleAlert('Internet Error', err);
-        }
+        this.props.store.setSource(this.state.source);
+        this.props.navigation.navigate('Feed');
     }
 
     render() {
@@ -35,8 +32,8 @@ class SetupSourceScreen extends React.Component {
                 <TextInput
                     mode='outlined'
                     style={styles.input}
-                    label='Source'
-                    onChangeText={source => this.setState({source})}
+                    label={I18n.t('source')}
+                    onChangeText={source => this.setState({ source })}
                     value={this.state.source}
                     theme={{
                         colors: {
@@ -46,7 +43,7 @@ class SetupSourceScreen extends React.Component {
                     }}
                 />
                 <LoadingButton style={styles.button} onPress={this._setUpButtonClick}>
-                    SUBMIT
+                    {I18n.t('submit')}
                 </LoadingButton>
             </ScrollView>
 

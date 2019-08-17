@@ -1,6 +1,7 @@
 import { action, observable, runInAction } from 'mobx';
 import NetworkRequests from './NetworkRequests';
 import Validator from './Validator';
+import I18n from '../strings/I18n';
 
 const TAG = '~Store.js~';
 
@@ -25,7 +26,7 @@ class ObservableStore {
                         this.articles = validateArticles;
                     });
                 } else {
-                    throw 'This link does not have any articles'
+                    throw I18n.t('emptyLink')
                 }
             } catch (err) {
                 throw err

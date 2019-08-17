@@ -1,4 +1,5 @@
 import { Alert } from "react-native";
+import I18n from '../strings/I18n';
 
 function showSimpleAlert(title, message){
     Alert.alert(
@@ -19,7 +20,7 @@ function showDifficultAlert(title, message, onPress){
         message,
         [
             {
-                text: 'CANCEL',
+                text: I18n.t('cancel'),
                 style: 'cancel'
             },
             {
