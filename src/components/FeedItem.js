@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import styles from '../styles';
+import ImageUtils from '../utils/ImageUtils';
 
 const TAG = '~FeedItem.js~'
 class FeedItem extends React.Component {
@@ -10,22 +11,10 @@ class FeedItem extends React.Component {
         imageUrl: null,
     };
 
-    shouldComponentUpdate = () => {
+    shouldComponentUpdate = async () => {
         if (this.props.item.imageUrl != this.state.imageUrl) {
-            this.setState({ imageUrl: this.props.item.imageUrl })
-            Image.getSize(this.props.item.imageUrl, (width, height) => {
-                const ratio = height / width;
-                const scaleWidth = Dimensions.get('window').width;
-                this.setState({
-                    width: scaleWidth,
-                    height: scaleWidth * ratio
-                });
-            }, (error)=>{
-                this.setState({
-                    width: 0,
-                    height: 0
-                })
-            });
+            const { width, height } = await ImageUtils.getSize(this.props.item.imageUrl);
+            this.setState({ width, height, imageUrl: this.props.item.imageUrl });
             return false;
         } else {
             return true;

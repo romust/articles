@@ -6,14 +6,17 @@ import FeedItem from '../components/FeedItem';
 import NetInfo from "@react-native-community/netinfo";
 import Alert from '../utils/Alert';
 import I18n from '../strings/I18n';
+
 const TAG = '~FeedScreen~';
 
 @inject('store')
 @observer
 class FeedScreen extends React.Component {
+    
     static navigationOptions = {
         title: I18n.t('feed')
     };
+
     state = {
         refreshing: false,
     };
@@ -35,9 +38,11 @@ class FeedScreen extends React.Component {
     _renderItem = ({ item }) => (
         <FeedItem item={item} onPressButton={this.onItemPress} />
     )
+
     _setUpButtonClick = () => {
         this.props.navigation.navigate('SetupSource');
     }
+
     onItemPress = (article) => {
         this.props.navigation.navigate('ArticleDetails', { article });
     }

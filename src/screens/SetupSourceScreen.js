@@ -2,9 +2,8 @@ import { inject, observer } from 'mobx-react/native';
 import React from 'react';
 import { TextInput } from 'react-native-paper';
 import styles from '../styles';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View } from 'react-native';
 import LoadingButton from '../components/LoadingButton';
-import Alert from '../utils/Alert';
 import I18n from '../strings/I18n';
 
 const TAG = '~SetupSourceScreen~';
@@ -18,9 +17,11 @@ class SetupSourceScreen extends React.Component {
     state = {
         source: null
     };
+    
     componentDidMount = () => {
         this.setState({ source: this.props.store.source });
     }
+
     _setUpButtonClick = async () => {
         this.props.store.setSource(this.state.source);
         this.props.navigation.navigate('Feed');
@@ -28,7 +29,7 @@ class SetupSourceScreen extends React.Component {
 
     render() {
         return (
-            <ScrollView>
+            <View>
                 <TextInput
                     mode='outlined'
                     style={styles.input}
@@ -45,7 +46,7 @@ class SetupSourceScreen extends React.Component {
                 <LoadingButton style={styles.button} onPress={this._setUpButtonClick}>
                     {I18n.t('submit')}
                 </LoadingButton>
-            </ScrollView>
+            </View>
 
         );
     }

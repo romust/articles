@@ -6,6 +6,7 @@ import moment from 'moment';
 import Icon from 'react-native-vector-icons/Feather';
 import Alert from '../utils/Alert';
 import I18n from '../strings/I18n';
+import ImageUtils from '../utils/ImageUtils';
 
 const TAG = '~ArticleDetailsScreen~';
 
@@ -17,18 +18,9 @@ class ArticleDetailsScreen extends React.Component {
         width: null,
         height: null
     };
-    componentDidMount = () => {
-        Image.getSize(this.props.navigation.getParam('article').imageUrl, (width, height) => {
-            const ratio = height / width;
-            const scaleWidth = Dimensions.get('window').width;
-            const scaleHeight = scaleWidth * ratio;
-            this.setState({ width: scaleWidth, height: scaleHeight });
-        }, (error) => {
-            this.setState({
-                width: 0,
-                height: 0
-            })
-        });
+    componentDidMount = async () => {
+        const { width, height } = await ImageUtils.getSize(this.props.navigation.getParam('article').imageUrl);
+        this.setState({ width, height });
     }
 
     _onPressExternalLink = () => {
@@ -45,7 +37,6 @@ class ArticleDetailsScreen extends React.Component {
                     backgroundColor: 'white',
                     marginBottom: 10
                 }}>
-
                     <Image
                         style={{
                             ...styles.image,
@@ -62,7 +53,6 @@ class ArticleDetailsScreen extends React.Component {
                         {link ? (<TouchableOpacity onPress={this._onPressExternalLink}>
                             <Icon name={'external-link'} color={'grey'} size={30} />
                         </TouchableOpacity>) : null}
-
                     </View>
                 </View>
             </ScrollView>

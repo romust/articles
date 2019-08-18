@@ -8,7 +8,6 @@ import {
 
 export default createAppContainer(
     createStackNavigator(
-        //свитч проверки авторизации
         {
             Feed: FeedScreen,
             SetupSource: SetupSourceScreen,
