@@ -11,10 +11,12 @@ class FeedItem extends React.Component {
         imageUrl: null,
     };
 
-    shouldComponentUpdate = async () => {
+    shouldComponentUpdate = () => {
         if (this.props.item.imageUrl != this.state.imageUrl) {
-            const { width, height } = await ImageUtils.getSize(this.props.item.imageUrl);
-            this.setState({ width, height, imageUrl: this.props.item.imageUrl });
+            ImageUtils.getSize(this.props.item.imageUrl, (width, height)=>{
+                this.setState({ width, height, imageUrl: this.props.item.imageUrl });
+            });
+            
             return false;
         } else {
             return true;

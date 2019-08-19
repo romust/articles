@@ -1,16 +1,14 @@
 import { Image, Dimensions } from 'react-native';
 
-async function getSize(url){
-    let result;
+async function getSize(url, set) {
     await Image.getSize(url, (width, height) => {
         const ratio = height / width;
         const scaleWidth = Dimensions.get('window').width;
         const scaleHeight = scaleWidth * ratio;
-        result = { width: scaleWidth, height: scaleHeight }
+        set(scaleWidth, scaleHeight);
     }, (error) => {
-        result = { width: 0, height: 0 }
+        set(0, 0);
     });
-    return result;
 }
 
-export default {getSize};
+export default { getSize };
