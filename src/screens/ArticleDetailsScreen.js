@@ -19,9 +19,9 @@ class ArticleDetailsScreen extends React.Component {
         height: null
     };
     componentDidMount = () => {
-        // ImageUtils.getSize(this.props.navigation.getParam('article').imageUrl, (width, height) => {
-        //     this.setState({ width, height });
-        // });
+        ImageUtils.getSize(this.props.navigation.getParam('article').imageUrl, (width, height) => {
+            this.setState({ width, height });
+        });
     }
 
     _onPressExternalLink = () => {
